@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+/* Brand colours come from config/site.ts as --brand-* variables on <html>. */
+@theme inline {
+  --color-ink: var(--brand-ink, #0c0e0f);
+  --color-bone: var(--brand-bone, #f3ede3);
+  --color-sand: var(--brand-sand, #e6dac6);
+  --color-clay: var(--brand-clay, #8c7a66);
+  --color-saffron: var(--brand-accent, #d9922e);
+  --color-sea: #1d4650;
+
+  --font-serif: var(--font-display), "Times New Roman", serif;
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-face), ui-monospace, monospace;
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-tide: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@layer base {
+  :root {
+    --gutter: clamp(1rem, 2.6vw, 2.75rem);
+  }
+  html {
+    background: var(--color-bone);
+    color: var(--color-ink);
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-bone);
+    overflow-x: clip;
+  }
+  ::selection {
+    background: var(--color-saffron);
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-saffron);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  /* Display serif scale */
+  .d-hero {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(3.4rem, 8.4vw, 10.5rem);
+    line-height: 0.88;
+    letter-spacing: -0.035em;
+  }
+  .d-xl {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(3rem, 9vw, 11rem);
+    line-height: 0.86;
+    letter-spacing: -0.035em;
+  }
+  .d-lg {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(2.5rem, 5.6vw, 6.75rem);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+  }
+  .d-md {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(1.9rem, 3.2vw, 3.6rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .lead {
+    font-size: clamp(1.05rem, 1.25vw, 1.3rem);
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+  }
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1.25;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .gutter {
+    padding-inline: var(--gutter);
+  }
+  /* The Swahili pointed arch, used as a frame everywhere. */
+  .arch {
+    clip-path: url(#arch);
+  }
+  /* lime-wash plaster texture */
+  .plaster {
+    background-color: var(--color-bone);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='.012 .02' numOctaves='4' seed='7'/><feColorMatrix values='0 0 0 0 .55  0 0 0 0 .47  0 0 0 0 .38  0 0 0 .07 0'/></filter><rect width='100%' height='100%' filter='url(%23p)'/></svg>");
+  }
+}
+
+.grain {
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  z-index: 90;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  mix-blend-mode: overlay;
+}
+
+@layer utilities {
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
